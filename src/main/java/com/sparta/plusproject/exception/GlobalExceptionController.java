@@ -33,6 +33,12 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(errorCode);
 	}
 
+	@ExceptionHandler(AuthenticationsException.class)
+	public ResponseEntity<Object> handleCustomException(AuthenticationsException e) {
+		ErrorCode errorCode = e.getErrorCode();
+		return handleExceptionInternal(errorCode);
+	}
+
 	@ExceptionHandler(SelfLikeException.class)
 	public ResponseEntity<Object> handleCustomException(SelfLikeException e) {
 		ErrorCode errorCode = e.getErrorCode();

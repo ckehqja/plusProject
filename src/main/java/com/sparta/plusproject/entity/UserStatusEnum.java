@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum UserStatusEnum {
-	USER("user"), ADMIN("admin");
+	USER("USER"), ADMIN("ADMIN"), WITHOUT_DRAW("WITHOUT_DRAW");
 
 	private final String status;
 

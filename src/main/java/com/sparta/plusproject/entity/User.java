@@ -24,6 +24,12 @@ public class User extends Timestamped {
 
 	private String password;
 
+	private String password1;
+
+	private String password2;
+
+	private String password3;
+
 	private String name;
 
 	@Enumerated(EnumType.STRING)
@@ -40,5 +46,25 @@ public class User extends Timestamped {
 
 	public void saveRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
+	}
+
+	public void logout() {
+		refreshToken = null;
+	}
+
+	public void edit(String name, String pw) {
+		this.name = name != null ? name : this.name;
+		if (pw != null) {
+
+			password = pw;
+			password3 = password2;
+			password2 = password1;
+			password1 = password;
+		}
+	}
+
+	public void withDraw() {
+		status = UserStatusEnum.WITHOUT_DRAW;
+		logout();
 	}
 }

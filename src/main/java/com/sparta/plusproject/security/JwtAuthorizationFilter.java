@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.sparta.plusproject.entity.UserStatusEnum;
+import com.sparta.plusproject.exception.AuthenticationsException;
+import com.sparta.plusproject.exception.UserErrorCode;
 import com.sparta.plusproject.jwt.JwtTokenHelper;
 
 import io.jsonwebtoken.Claims;
@@ -34,7 +37,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 
 		String accessValue = jwtTokenHelper.getJwtFromHeader(req, JwtTokenHelper.AUTHORIZATION_HEADER);
-		String refreshValue = jwtTokenHelper.getJwtFromHeader(req, JwtTokenHelper.REFRESH_TOKEN_HEADER);
 
 		log.info("access token {}", accessValue);
 		if (StringUtils.hasText(accessValue)) {
@@ -43,17 +45,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 				return;
 			}
 
-			if (StringUtils.hasText(refreshValue)) {
-				if (!jwtTokenHelper.validateToken(refreshValue)) {
-					log.error("RefreshToken Error");
-					return;
-				}
-			}
-
 			Claims info = jwtTokenHelper.getUserInfoFromToken(accessValue);
 
 			try {
 				setAuthentication(info.getSubject());
+				String status = info.get(JwtTokenHelper.AUTHORIZATION_KEY, String.class);
+				if (status.equals(UserStatusEnum.WITHOUT_DRAW.getStatus())) {
+					throw new AuthenticationsException(UserErrorCode.NO_AUTHENTICATION_WITHOUT_DRAW);
+				}
 			} catch (Exception e) {
 				log.error(e.getMessage());
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

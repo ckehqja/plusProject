@@ -30,11 +30,14 @@ public enum UserErrorCode implements ErrorCode {
 		"인증번호가 없습니다 확인부탁드립니다."),
 	AUTH_MISMATCH(HttpStatus.NOT_FOUND,
 		"인증번호가 틀렸습니다. 확인부탁드립니다."),
+	NO_AUTHENTICATION_WITHOUT_DRAW(HttpStatus.NOT_FOUND,
+		"탈퇴한 회원입니다."),
 	EMAIL_DUPLICATE(HttpStatus.NOT_FOUND,
-		"이메일 중복");
+		"이메일 중복"),
+	PW_DUPLICATE(HttpStatus.NOT_FOUND,
+		"현재 비밀번호 및 최근 사용한 세 개의 비밀번호와 다르게 설정해야 합니다.");
 
 	private final HttpStatus httpStatus;
 	private final String message;
 }
-
 
