@@ -1,7 +1,7 @@
 ## Variables
-@username = fltnsah12345111!1
-@password = test@1234AAAA11
-@name = testname!1
+@username = fltnsah12
+@password = test@123
+@name = testna
 
 @edit_name = editTestUsername12
 @password1 = test@1234AAAA11
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 {
   "username": "{{username}}",
-  "password": "{{password}}"
+  "password": "{{password4}}"
 }
 
 > {% client.global.set("Authorization", response.headers.valueOf("Authorization")),
@@ -113,10 +113,7 @@ Content-Type: application/json
 GET http://localhost:8080/refreshToken
 Authorization:{{Authorization}}
 Refresh_token:{{Refresh_token}}
-Content-Type: application/json
 
-> {% client.global.set("Authorization", response.headers.valueOf("Authorization")),
-        client.global.set("Refresh_token", response.headers.valueOf("Refresh_token")); %}
 
 
 

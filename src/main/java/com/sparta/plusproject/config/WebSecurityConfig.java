@@ -58,7 +58,7 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests(authorizeHttpRequests ->
 			authorizeHttpRequests
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // 리소스 접근 허용 설정
-				.requestMatchers("/v1/login", "/users", "/users/refresh", "/error").permitAll() // 특정 엔드포인트 접근 허용
+				.requestMatchers("/v1/login", "/users",  "/error").permitAll() // 특정 엔드포인트 접근 허용
 				// .requestMatchers(HttpMethod.POST).permitAll() // 특정 POST 요청 허용
 				.requestMatchers(HttpMethod.GET).permitAll() // 모든 GET 요청 허용
 				.anyRequest().authenticated() // 그 외 모든 요청 인증 처리
