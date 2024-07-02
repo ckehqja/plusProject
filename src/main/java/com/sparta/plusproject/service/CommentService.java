@@ -69,7 +69,7 @@ public class CommentService {
 		if (comment.getPost().getId() != postId)
 			throw new NotFoundException(CommentErrorCode.COMMENT_MISMATCH_POST);
 
-		if (comment.getUser().getId() != user.getId())
+		if (user.equalUserId(comment.getUser().getId()))
 			throw new NotFoundException(CommentErrorCode.COMMENT_MISMATCH_USER);
 
 		return comment;

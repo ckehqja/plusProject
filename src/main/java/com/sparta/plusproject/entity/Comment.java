@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Comment extends Timestamped {
+public class Comment extends Timestamped implements Content {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +34,24 @@ public class Comment extends Timestamped {
 	@JoinColumn(name = "users_id")
 	private User user;
 
+	private long likes;
+
 	public Comment(Post post, User user, String comment) {
 		this.post = post;
 		this.user = user;
 		this.content = comment;
+		this.likes = 0;
 	}
 
 	public void edit(String content) {
 		this.content = content;
+	}
+
+	public void addLikes() {
+		likes++;
+	}
+
+	public void removeLikes() {
+		likes--;
 	}
 }

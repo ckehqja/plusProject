@@ -18,6 +18,11 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
 	@EntityGraph(attributePaths = {"post", "user"})
 	Optional<Comment> findPostById(long id);
 
+	default Comment findByIdGetComment(long commentId) {
+		return findById(commentId).orElseThrow(
+			() -> new NotFoundException(CommentErrorCode.COMMENT_NOT_FOUND));
+	}
+
 	default Comment findByIdGetCommentAll(long commentId) {
 		return findPostById(commentId).orElseThrow(
 			() -> new NotFoundException(CommentErrorCode.COMMENT_NOT_FOUND));

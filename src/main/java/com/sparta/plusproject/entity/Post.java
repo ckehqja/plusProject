@@ -1,7 +1,5 @@
 package com.sparta.plusproject.entity;
 
-import java.util.Optional;
-
 import com.sparta.plusproject.dto.PostRequestDto;
 
 import jakarta.persistence.Entity;
@@ -17,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post extends Timestamped {
+public class Post extends Timestamped implements Content {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +29,8 @@ public class Post extends Timestamped {
 	@JoinColumn(name = "users_id")
 	private User user;
 
+	private long likes;
+
 	public Post(PostRequestDto requestDto, User user) {
 		title = requestDto.getTitle();
 		content = requestDto.getContent();
@@ -42,4 +42,11 @@ public class Post extends Timestamped {
 		content = requestDto.getContent() != null ? requestDto.getContent() : content;
 	}
 
+	public void addLikes() {
+		likes++;
+	}
+
+	public void removeLikes() {
+		likes--;
+	}
 }

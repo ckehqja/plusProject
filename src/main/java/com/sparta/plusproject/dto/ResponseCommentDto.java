@@ -10,12 +10,14 @@ public class ResponseCommentDto {
 	private long userId;
 	private long postId;
 	private String content;
+	private long likes;
 
 	public ResponseCommentDto(Comment comment) {
 		commentId = comment.getId();
 		userId = comment.getUser().getId();
 		postId = comment.getPost().getId();
 		content = comment.getContent();
+		likes = comment.getLikes();
 	}
 }
 

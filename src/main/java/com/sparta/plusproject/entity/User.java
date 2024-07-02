@@ -67,4 +67,8 @@ public class User extends Timestamped {
 		status = UserStatusEnum.WITHOUT_DRAW;
 		logout();
 	}
+
+	public boolean equalUserId(long id) {
+		return this.id == id;
+	}
 }
