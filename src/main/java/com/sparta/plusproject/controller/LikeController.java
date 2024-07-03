@@ -58,7 +58,6 @@ public class LikeController {
 	}
 
 	@DeleteMapping("/posts/{postId}/comment/{commentId}/likes/{likeId}")
-	// ("/likes/{likeId}")
 	public ResponseEntity<CommonResponse<ResponseLikeDto>> deleteCommentLike(
 		@PathVariable long commentId,
 		@PathVariable long likeId,

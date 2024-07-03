@@ -61,7 +61,7 @@ public class PostController {
 
 		return ResponseEntity.ok(
 			new CommonResponse<ResponsePostListDto>(
-				HttpStatus.OK,   " 글 페이징 조회 완료", responseDto)
+				HttpStatus.OK, " 글 페이징 조회 완료", responseDto)
 		);
 	}
 
@@ -91,4 +91,32 @@ public class PostController {
 				HttpStatus.OK, postId + " - 글 삭제 완료", null)
 		);
 	}
+
+	@GetMapping("/dsl")
+	public ResponseEntity<CommonResponse<ResponsePostListDto>> getAllPostsDsl(
+		@RequestParam(defaultValue = "10") int size,
+		@RequestParam(defaultValue = "0") int page) {
+
+		ResponsePostListDto responseDto = postService.getAllPostsDsl(size, page);
+
+		return ResponseEntity.ok(
+			new CommonResponse<ResponsePostListDto>(
+				HttpStatus.OK, " 글 페이징 조회 완료", responseDto)
+		);
+	}
+
+	@GetMapping("/likes")
+	public ResponseEntity<CommonResponse<ResponsePostListDto>> getAllPostsLike(
+		@RequestParam(defaultValue = "10") int size,
+		@RequestParam(defaultValue = "0") int page,
+		@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+		ResponsePostListDto responseDto = postService.getAllPostsDslOrderByLike(size, page,userDetails.getUser().getId());
+
+		return ResponseEntity.ok(
+			new CommonResponse<ResponsePostListDto>(
+				HttpStatus.OK, " 글 페이징 조회 완료", responseDto)
+		);
+	}
+
 }

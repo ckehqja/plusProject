@@ -1,5 +1,7 @@
 package com.sparta.plusproject.dto;
 
+import java.time.LocalDateTime;
+
 import com.sparta.plusproject.entity.Post;
 
 import lombok.Data;
@@ -12,6 +14,7 @@ public class ResponsePostDto {
 	private String content;
 	private String username;
 	private long likes;
+	private LocalDateTime createdAt;
 
 	public ResponsePostDto(Post savedPost) {
 		id = savedPost.getId();
@@ -19,5 +22,6 @@ public class ResponsePostDto {
 		content = savedPost.getContent();
 		username = savedPost.getUser().getUsername();
 		likes = savedPost.getLikes();
+		createdAt = savedPost.getCreatedAt();
 	}
 }

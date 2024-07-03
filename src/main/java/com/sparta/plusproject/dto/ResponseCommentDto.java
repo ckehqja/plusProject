@@ -17,7 +17,7 @@ public class ResponseCommentDto {
 		userId = comment.getUser().getId();
 		postId = comment.getPost().getId();
 		content = comment.getContent();
-		likes = comment.getLikes();
+		likes = comment.getLikeCount();
 	}
 }
 

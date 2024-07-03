@@ -11,6 +11,7 @@ import com.sparta.plusproject.entity.Post;
 import com.sparta.plusproject.entity.User;
 import com.sparta.plusproject.exception.MismatchException;
 import com.sparta.plusproject.exception.UserErrorCode;
+import com.sparta.plusproject.repository.PostDslRepository;
 import com.sparta.plusproject.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
 
 	private final PostRepository postRepository;
+	private final PostDslRepository postDslRepository;
 
 	public ResponsePostDto addPost(PostRequestDto requestDto, User user) {
 		Post savedPost = postRepository.save(new Post(requestDto, user));
@@ -62,5 +64,25 @@ public class PostService {
 				pageRequest).stream()
 			.map(ResponsePostDto::new)
 			.toList());
+	}
+
+	public ResponsePostListDto getAllPostsDsl(int size, int page) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		return new ResponsePostListDto(
+			postDslRepository.getPostListWithPage(pageRequest.getOffset(), pageRequest.getPageSize())
+				.stream()
+				.map(ResponsePostDto::new)
+				.toList());
+	}
+
+	@Transactional
+	public ResponsePostListDto getAllPostsDslOrderByLike(int size, int page, long userId) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		return new ResponsePostListDto(
+			postDslRepository.getPostListWithPageLike(pageRequest.getOffset(), pageRequest.getPageSize(), userId)
+				.stream()
+				.map(ResponsePostDto::new)
+				.toList());
+
 	}
 }

@@ -34,13 +34,13 @@ public class Comment extends Timestamped implements Content {
 	@JoinColumn(name = "users_id")
 	private User user;
 
-	private long likes;
+	private long likeCount;
 
 	public Comment(Post post, User user, String comment) {
 		this.post = post;
 		this.user = user;
 		this.content = comment;
-		this.likes = 0;
+		this.likeCount = 0;
 	}
 
 	public void edit(String content) {
@@ -48,10 +48,10 @@ public class Comment extends Timestamped implements Content {
 	}
 
 	public void addLikes() {
-		likes++;
+		likeCount++;
 	}
 
 	public void removeLikes() {
-		likes--;
+		likeCount--;
 	}
 }

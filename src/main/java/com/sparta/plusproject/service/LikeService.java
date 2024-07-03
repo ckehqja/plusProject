@@ -33,7 +33,7 @@ public class LikeService {
 		Post content = postRepository.findByIdGetPost(contentId);
 
 		Like like = contentCheck(contentId, user, contentType, content);
-		addLikes(content);
+		content.addLikes();
 
 		return new ResponseLikeDto(like);
 	}
@@ -45,7 +45,7 @@ public class LikeService {
 		Comment content = commentRepository.findByIdGetComment(contentId);
 
 		Like like = contentCheck(contentId, user, contentType, content);
-		addLikes(content);
+		content.addLikes();
 
 		return new ResponseLikeDto(like);
 	}
@@ -59,7 +59,7 @@ public class LikeService {
 		}
 
 		Post post = postRepository.findByIdGetPost(postId);
-		removeLikes(post);
+		post.removeLikes();
 
 		likeRepository.delete(like);
 	}
@@ -72,8 +72,7 @@ public class LikeService {
 		}
 
 		Comment comment = commentRepository.findByIdGetComment(commentId);
-		removeLikes(comment);
-
+		comment.removeLikes();
 		likeRepository.delete(like);
 	}
 
@@ -91,13 +90,5 @@ public class LikeService {
 		Like like = new Like(user, contentType, contentId);
 		likeRepository.save(like);
 		return like;
-	}
-
-	private void addLikes(Content content) {
-		content.addLikes();
-	}
-
-	private void removeLikes(Content content) {
-		content.removeLikes();
 	}
 }
