@@ -47,10 +47,12 @@ public class Comment extends Timestamped implements Content {
 		this.content = content;
 	}
 
+	@Override
 	public void addLikes() {
 		likeCount++;
 	}
 
+	@Override
 	public void removeLikes() {
 		likeCount--;
 	}

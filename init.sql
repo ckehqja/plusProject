@@ -19,3 +19,10 @@ INSERT INTO post (created_at, modified_at, users_id, content, title, likes) VALU
 INSERT INTO post (created_at, modified_at, users_id, content, title, likes) VALUES ('2024-07-02 05:34:56', '2024-07-02 05:34:56', 3, 'Post content 18', 'Post Title 18', 180);
 INSERT INTO post (created_at, modified_at, users_id, content, title, likes) VALUES ('2024-07-02 06:34:56', '2024-07-02 06:34:56', 4, 'Post content 19', 'Post Title 19', 190);
 INSERT INTO post (created_at, modified_at, users_id, content, title, likes) VALUES ('2024-07-02 07:34:56', '2024-07-02 07:34:56', 5, 'Post content 20', 'Post Title 20', 200);
+
+
+select c1_0.id,c1_0.content,c1_0.created_at,c1_0.like_count,c1_0.modified_at,c1_0.post_id,u1_0.id,u1_0.created_at,u1_0.modified_at,u1_0.name,u1_0.password,u1_0.password1,u1_0.password2,u1_0.password3,u1_0.refresh_token,u1_0.status,u1_0.username from comment c1_0 left join likes l1_0 on c1_0.id=l1_0.content_id left join users u1_0 on u1_0.id=c1_0.users_id where c1_0.users_id=4 order by c1_0.created_at desc limit 0,5;
+
+select c1_0.id,c1_0.content,c1_0.created_at,c1_0.like_count,c1_0.modified_at,c1_0.post_id,u1_0.id,u1_0.created_at,u1_0.modified_at,u1_0.name,u1_0.password,u1_0.password1,u1_0.password2,u1_0.password3,u1_0.refresh_token,u1_0.status,u1_0.username from comment c1_0 left join likes l1_0 on c1_0.id=l1_0.content_id left join users u1_0 on u1_0.id=c1_0.users_id where l1_0.users_id=c1_0.users_id order by c1_0.created_at desc limit 5,5;
+
+select c1_0.id,c1_0.content,c1_0.created_at,c1_0.like_count,c1_0.modified_at,c1_0.post_id,u1_0.id,u1_0.created_at,u1_0.modified_at,u1_0.name,u1_0.password,u1_0.password1,u1_0.password2,u1_0.password3,u1_0.refresh_token,u1_0.status,u1_0.username from comment c1_0 left join likes l1_0 on c1_0.id=l1_0.content_id left join users u1_0 on u1_0.id=c1_0.users_id where l1_0.users_id=4 order by c1_0.created_at desc limit 0,5;

@@ -1,6 +1,7 @@
 package com.sparta.plusproject.service;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,7 +80,23 @@ public class PostService {
 	public ResponsePostListDto getAllPostsDslOrderByLike(int size, int page, long userId) {
 		PageRequest pageRequest = PageRequest.of(page, size);
 		return new ResponsePostListDto(
-			postDslRepository.getPostListWithPageLike(pageRequest.getOffset(), pageRequest.getPageSize(), userId)
+			postDslRepository.getPostListWithPageLike(pageRequest, userId)
+				.stream()
+				.map(ResponsePostDto::new)
+				.toList());
+
+	}
+
+	@Transactional
+	public ResponsePostListDto getAllPostsDslOrderByLike(
+		int page, int size, long userId, String sortBy, boolean isAsc) {
+
+		Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+		Sort sort = Sort.by(direction, sortBy);
+		PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+		return new ResponsePostListDto(
+			postDslRepository.getPostListWithPageLikeOrderBy(pageRequest, userId)
 				.stream()
 				.map(ResponsePostDto::new)
 				.toList());

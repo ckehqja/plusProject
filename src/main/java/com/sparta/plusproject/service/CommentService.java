@@ -1,5 +1,6 @@
 package com.sparta.plusproject.service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import com.sparta.plusproject.entity.Post;
 import com.sparta.plusproject.entity.User;
 import com.sparta.plusproject.exception.CommentErrorCode;
 import com.sparta.plusproject.exception.NotFoundException;
+import com.sparta.plusproject.repository.CommentDslRepository;
 import com.sparta.plusproject.repository.CommentRepository;
 import com.sparta.plusproject.repository.PostRepository;
 
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 
 	private final CommentRepository commentRepository;
+	private final CommentDslRepository commentDslRepository;
 	private final PostRepository postRepository;
 
 	public ResponseCommentDto createComment(long postId, User user, RequestCommentDto requestDto) {
@@ -52,7 +55,7 @@ public class CommentService {
 
 	@Transactional
 	public ResponseCommentDto editComment(long postId, long commentId, String content, User user) {
- 		Comment comment = commentCheck(postId, commentId, user);
+		Comment comment = commentCheck(postId, commentId, user);
 
 		comment.edit(content);
 
@@ -75,4 +78,15 @@ public class CommentService {
 		return comment;
 	}
 
+	public ResponseCommentListDto getAllCommentLike(int page, int size, long userId) {
+		PageRequest pageable = PageRequest.of(page, size);
+
+		List<Comment> commentList = commentDslRepository.findAllLikeOrderByCreated(pageable, userId);
+
+		return new ResponseCommentListDto(
+			commentList.stream()
+				.map(ResponseCommentDto::new)
+				.toList()
+		);
+	}
 }

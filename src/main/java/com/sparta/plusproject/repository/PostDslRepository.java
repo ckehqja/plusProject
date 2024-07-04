@@ -1,12 +1,14 @@
 package com.sparta.plusproject.repository;
 
-import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.plusproject.entity.Post;
 import com.sparta.plusproject.entity.QLike;
@@ -31,34 +33,57 @@ public class PostDslRepository {
 			.fetch();
 	}
 
-	public List<Post> getPostListWithPageLike(long offset, int pageSize, long userId) {
+	public List<Post> getPostListWithPageLike(PageRequest pageRequest, long userId) {
 		QPost post = QPost.post;
 		QLike like = QLike.like;
 		QUser user = QUser.user;
 
 		OrderSpecifier<?> orderSpecifier = new OrderSpecifier<>(Order.DESC, post.createdAt);
 
-
-		// return jpaQueryFactory.select(post)
-		// 	.from(post)
-		// 	.innerJoin(like).on(post.id.eq(like.contentId))
-		// 	.innerJoin(user).on(post.user.id.eq(user.id))
-		// 	.fetchJoin()
-		// 	.where(like.user.id.eq(userId))
-		// 	.offset(offset)
-		// 	.limit(pageSize)
-		// 	.orderBy(orderSpecifier)
-		// 	.fetch();
 		return jpaQueryFactory.select(post)
 			.distinct()
 			.from(post)
 			.leftJoin(like).on(post.id.eq(like.contentId))
-			.leftJoin(user).on(post.user.id.eq(user.id))
+			.leftJoin(post.user, user)
 			.fetchJoin()
 			.where(like.user.id.eq(userId))
-			.offset(offset)
-			.limit(pageSize)
+			.offset(pageRequest.getOffset())
+			.limit(pageRequest.getPageSize())
 			.orderBy(orderSpecifier)
 			.fetch();
+	}
+
+	public List<Post> getPostListWithPageLikeOrderBy(PageRequest pageRequest, long userId) {
+		QPost post = QPost.post;
+		QLike like = QLike.like;
+		QUser user = QUser.user;
+
+		// 정렬 조건을 가져옴
+		OrderSpecifier<?> orderSpecifier = getOrderSpecifier(pageRequest.getSort(), post);
+
+		// OrderSpecifier<?> orderSpecifier = new OrderSpecifier<>(Order.DESC, post.createdAt);
+
+		return jpaQueryFactory.select(post)
+		   .distinct()
+		   .from(post)
+		   .leftJoin(like).on(post.id.eq(like.contentId))
+		   .leftJoin(post.user, user)
+		   .fetchJoin()
+		   .where(like.user.id.eq(userId))
+		   .offset(pageRequest.getOffset())
+		   .limit(pageRequest.getPageSize())
+		   .orderBy(orderSpecifier)
+		   .fetch();
+	}
+
+	private OrderSpecifier<?> getOrderSpecifier(Sort sort, QPost post) {
+		for (Sort.Order order : sort) {
+			PathBuilder<Post> pathBuilder = new PathBuilder<>(post.getType(), post.getMetadata());
+			return new OrderSpecifier(
+				order.isAscending() ? com.querydsl.core.types.Order.ASC : com.querydsl.core.types.Order.DESC,
+				pathBuilder.get(order.getProperty())
+			);
+		}
+		return null;
 	}
 }

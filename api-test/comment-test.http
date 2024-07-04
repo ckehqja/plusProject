@@ -22,7 +22,7 @@ Content-Type: application/json
 
 
 ### 댓글 작성
-POST http://localhost:8080/posts/2/comment
+POST http://localhost:8080/posts/4/comment
 Authorization:{{Authorization}}
 Content-Type: application/json
 
@@ -59,3 +59,10 @@ GET http://localhost:8080/posts/1/comment/2
 
 ### 특정 글에 있는 댓글 조회(페이징, 생성 내림차순)
 GET http://localhost:8080/posts/1/comment?page=1
+
+
+
+
+### 특정 글에 있는 댓글 조회(페이징, 생성 내림차순)
+GET http://localhost:8080/posts/1/comment/likes?page=0&size=3
+Authorization:{{Authorization}}

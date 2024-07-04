@@ -93,4 +93,18 @@ public class CommentController {
 			new CommonResponse<>(HttpStatus.CREATED, "댓글 조회 완료", null)
 		);
 	}
+
+	@GetMapping("/likes")
+	public ResponseEntity<CommonResponse<ResponseCommentListDto>> getLikes(
+		@RequestParam(defaultValue = "0") int page,
+		@RequestParam(defaultValue = "5") int size,
+		@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+		ResponseCommentListDto responseDto = commentService.getAllCommentLike(
+			page, size, userDetails.getUser().getId());
+
+		return ResponseEntity.ok(
+			new CommonResponse<>(
+				HttpStatus.OK, "좋아요 댓글 조회", responseDto));
+	}
 }

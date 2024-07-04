@@ -42,10 +42,12 @@ public class Post extends Timestamped implements Content {
 		content = requestDto.getContent() != null ? requestDto.getContent() : content;
 	}
 
+	@Override
 	public void addLikes() {
 		likes++;
 	}
 
+	@Override
 	public void removeLikes() {
 		likes--;
 	}
