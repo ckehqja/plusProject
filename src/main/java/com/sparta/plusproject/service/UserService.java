@@ -15,6 +15,8 @@ import com.sparta.plusproject.exception.AuthenticationsException;
 import com.sparta.plusproject.exception.DuplicateException;
 import com.sparta.plusproject.exception.MismatchException;
 import com.sparta.plusproject.exception.UserErrorCode;
+import com.sparta.plusproject.repository.LikeDslRepository;
+import com.sparta.plusproject.repository.LikeRepository;
 import com.sparta.plusproject.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final LikeDslRepository likeDslRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public ResponseUserDto createUser(RequestUserDto requestDto) {
@@ -85,5 +88,11 @@ public class UserService {
 	public void deleteUser(User user) {
 		user.withDraw();
 		userRepository.save(user);
+	}
+
+	public ResponseUserDto findUser(User user) {
+		long commentLikeCount = likeDslRepository.getCommentLikeCount(user.getId());
+		long postLikeCount = likeDslRepository.getPostLikeCount(user.getId());
+		return new ResponseUserDto(user, commentLikeCount, postLikeCount);
 	}
 }

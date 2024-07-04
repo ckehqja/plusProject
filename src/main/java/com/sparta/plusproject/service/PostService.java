@@ -56,7 +56,7 @@ public class PostService {
 	}
 
 	public ResponsePostDto getPost(long postId) {
-		return new ResponsePostDto(postRepository.findByIdGetPost(postId));
+		return new ResponsePostDto(postRepository.findByIdGetPostAll(postId));
 	}
 
 	public ResponsePostListDto getAllPosts(int size, int page) {
@@ -79,6 +79,7 @@ public class PostService {
 	@Transactional
 	public ResponsePostListDto getAllPostsDslOrderByLike(int size, int page, long userId) {
 		PageRequest pageRequest = PageRequest.of(page, size);
+
 		return new ResponsePostListDto(
 			postDslRepository.getPostListWithPageLike(pageRequest, userId)
 				.stream()

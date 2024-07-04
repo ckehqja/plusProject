@@ -10,10 +10,20 @@ public class ResponseUserDto {
 	private long id;
 	private String username;
 	private String name;
+	private long commentLikeCount;
+	private long postLikeCount;
 
 	public ResponseUserDto(User user) {
 		id = user.getId();
 		username = user.getUsername();
 		name = user.getName();
+	}
+
+	public ResponseUserDto(User user, long commentLikeCount, long postLikeCount) {
+		id = user.getId();
+		username = user.getUsername();
+		name = user.getName();
+		this.commentLikeCount = commentLikeCount;
+		this.postLikeCount = postLikeCount;
 	}
 }

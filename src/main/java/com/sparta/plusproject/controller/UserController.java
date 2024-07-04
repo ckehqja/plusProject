@@ -42,7 +42,7 @@ public class UserController {
 	public ResponseEntity<CommonResponse<ResponseUserDto>> getUser(
 		@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-		ResponseUserDto responseDto = new ResponseUserDto(userDetails.getUser());
+		ResponseUserDto responseDto = userService.findUser(userDetails.getUser());
 
 		return ResponseEntity.ok(
 			new CommonResponse<ResponseUserDto>(
