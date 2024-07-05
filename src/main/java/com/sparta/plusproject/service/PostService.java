@@ -103,4 +103,13 @@ public class PostService {
 				.toList());
 
 	}
+
+	public ResponsePostListDto getAllPostsDslWhereFollow(int size, int page, User user) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+
+		return new ResponsePostListDto(
+			postDslRepository.getPostWhereFollow(pageRequest, user.getId()).stream()
+				.map(ResponsePostDto::new).toList()
+		);
+	}
 }

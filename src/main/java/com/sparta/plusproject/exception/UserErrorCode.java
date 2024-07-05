@@ -35,7 +35,9 @@ public enum UserErrorCode implements ErrorCode {
 	EMAIL_DUPLICATE(HttpStatus.NOT_FOUND,
 		"이메일 중복"),
 	PW_DUPLICATE(HttpStatus.NOT_FOUND,
-		"현재 비밀번호 및 최근 사용한 세 개의 비밀번호와 다르게 설정해야 합니다.");
+		"현재 비밀번호 및 최근 사용한 세 개의 비밀번호와 다르게 설정해야 합니다."),
+	SELF_FOLLOW(HttpStatus.NOT_FOUND,
+		"자기 자신을 팔로우 하지 못합니다");
 
 	private final HttpStatus httpStatus;
 	private final String message;

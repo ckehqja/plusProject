@@ -2,6 +2,7 @@ package com.sparta.plusproject.entity;
 
 import com.sparta.plusproject.dto.PostRequestDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Post extends Timestamped implements Content {
 
 	private String content;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "users_id")
 	private User user;
 

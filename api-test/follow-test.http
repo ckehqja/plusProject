@@ -1,0 +1,35 @@
+## Variables
+@username = fltnsah121
+@password = test@1231
+@name = testna1
+
+###  로그인
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "password": "{{password}}"
+}
+
+> {% client.global.set("Authorization", response.headers.valueOf("Authorization")),
+ client.global.set("Refresh_token", response.headers.valueOf("Refresh_token")); %}
+
+
+
+
+
+
+### 유저 팔로우
+GET http://localhost:8080/follows/5
+Authorization:{{Authorization}}
+
+
+
+
+
+
+###유저 언팔
+DELETE http://localhost:8080/follows/2
+Authorization:{{Authorization}}
+

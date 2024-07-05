@@ -107,11 +107,25 @@ public class PostController {
 
 	@GetMapping("/likes")
 	public ResponseEntity<CommonResponse<ResponsePostListDto>> getAllPostsLike(
-		@RequestParam(defaultValue = "10") int size,
+		@RequestParam(defaultValue = "5") int size,
 		@RequestParam(defaultValue = "0") int page,
 		@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-		ResponsePostListDto responseDto = postService.getAllPostsDslOrderByLike(size, page,userDetails.getUser().getId());
+		ResponsePostListDto responseDto = postService.getAllPostsDslOrderByLike(size, page, userDetails.getUser().getId());
+
+		return ResponseEntity.ok(
+			new CommonResponse<ResponsePostListDto>(
+				HttpStatus.OK, " 글 페이징 조회 완료", responseDto)
+		);
+	}
+
+	@GetMapping("/follow")
+	public ResponseEntity<CommonResponse<ResponsePostListDto>> getAllPostsFollow(
+		@RequestParam(defaultValue = "5") int size,
+		@RequestParam(defaultValue = "0") int page,
+		@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+		ResponsePostListDto responseDto = postService.getAllPostsDslWhereFollow(size, page, userDetails.getUser());
 
 		return ResponseEntity.ok(
 			new CommonResponse<ResponsePostListDto>(

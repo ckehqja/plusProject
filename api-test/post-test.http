@@ -81,6 +81,19 @@ Authorization:{{Authorization}}
 
 
 
+
+
+
+
+### 글 조회 - dsl 내가 팔로우한 생성 내림순
+GET http://localhost:8080/posts/follow?page=0&size=5
+Authorization:{{Authorization}}
+
+
+
+
+
+
 ### 글 조회 - 좋아요 순
 GET http://localhost:8080/posts/likes
 
