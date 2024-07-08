@@ -1,5 +1,7 @@
 package com.sparta.plusproject.entity;
 
+import java.util.List;
+
 import com.sparta.plusproject.dto.PostRequestDto;
 
 import jakarta.persistence.CascadeType;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +34,9 @@ public class Post extends Timestamped implements Content {
 	private User user;
 
 	private long likes;
+
+	@OneToMany(mappedBy = "post")
+	private List<Comment> commentList;
 
 	public Post(PostRequestDto requestDto, User user) {
 		title = requestDto.getTitle();

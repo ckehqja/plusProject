@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sparta.plusproject.dto.PostRequestDto;
+import com.sparta.plusproject.dto.ResponsePostCommentDto;
 import com.sparta.plusproject.dto.ResponsePostDto;
 import com.sparta.plusproject.dto.ResponsePostListDto;
 import com.sparta.plusproject.entity.Post;
@@ -112,4 +113,10 @@ public class PostService {
 				.map(ResponsePostDto::new).toList()
 		);
 	}
+
+	// public ResponsePostCommentDto getAllPostsComments(long postId) {
+	//
+	// 	postDslRepository.getPostComments(postId);
+	//
+	// }
 }

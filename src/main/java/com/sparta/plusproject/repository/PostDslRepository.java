@@ -13,7 +13,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.plusproject.dto.PostUserDto;
+import com.sparta.plusproject.dto.ResponsePostCommentDto;
 import com.sparta.plusproject.entity.Post;
+import com.sparta.plusproject.entity.QComment;
 import com.sparta.plusproject.entity.QFollow;
 import com.sparta.plusproject.entity.QLike;
 import com.sparta.plusproject.entity.QPost;
@@ -119,4 +121,11 @@ public class PostDslRepository {
 		}
 		return null;
 	}
+
+	// public ResponsePostCommentDto getPostComments(long postId) {
+	// 	QPost post = QPost.post;
+	// 	QComment comment = QComment.comment;
+	//
+	//
+	// }
 }

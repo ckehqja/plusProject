@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sparta.plusproject.common.CommonResponse;
 import com.sparta.plusproject.dto.PostRequestDto;
+import com.sparta.plusproject.dto.ResponsePostCommentDto;
 import com.sparta.plusproject.dto.ResponsePostDto;
 import com.sparta.plusproject.dto.ResponsePostListDto;
 import com.sparta.plusproject.security.UserDetailsImpl;
@@ -132,6 +133,13 @@ public class PostController {
 				HttpStatus.OK, " 글 페이징 조회 완료", responseDto)
 		);
 	}
+
+	// @GetMapping("/{postId}/comments")
+	// public ResponseEntity<CommonResponse<ResponsePostCommentDto>> getAllPostsComments(
+	// 	@PathVariable long postId) {
+	//
+	// 	postService.getAllPostsComments(postId);
+	// }
 
 
 
